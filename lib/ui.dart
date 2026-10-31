@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -443,11 +445,13 @@ class WordPicture extends StatelessWidget {
     required this.label,
     this.width = 175,
     this.height = 148,
+    this.photo,
   });
   final String kind;
   final String label;
   final double width;
   final double height;
+  final Uint8List? photo; // if set, show this photo instead of the drawing
 
   static const _f = '#1C274D';
   static const _p = '#FF873A';
@@ -518,6 +522,17 @@ class WordPicture extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (photo != null) {
+      return ClipRRect(
+        borderRadius: BorderRadius.circular(18),
+        child: Image.memory(
+          photo!,
+          width: width,
+          height: height,
+          fit: BoxFit.cover,
+        ),
+      );
+    }
     if (kind == 'house' || kind == 'horse' || kind == 'dog' || kind == 'cat') {
       final svg = kind == 'house'
           ? _house()

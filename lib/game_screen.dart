@@ -136,8 +136,10 @@ class _GameScreenState extends State<GameScreen> {
       feedback = filled.length == word.parts.length ? 'correct' : 'idle';
     });
     if (filled.length == word.parts.length) {
-      final text = word.text;
-      timers.add(Timer(const Duration(milliseconds: 600), () => speak(text)));
+      final finished = word;
+      timers.add(
+        Timer(const Duration(milliseconds: 600), () => speakWord(finished)),
+      );
     }
   }
 
@@ -291,7 +293,7 @@ class _GameScreenState extends State<GameScreen> {
       circle: true,
       size: size,
       color: C.teal,
-      onTap: () => speak(w.text),
+      onTap: () => speakWord(w),
       child: Icon(
         Icons.volume_up_outlined,
         size: size > 60 ? 40 : 26,
@@ -317,6 +319,7 @@ class _GameScreenState extends State<GameScreen> {
               child: WordPicture(
                 kind: w.picture,
                 label: w.text,
+                photo: w.photo,
                 width: 175,
                 height: o.coop ? 100 : 125,
               ),
@@ -345,7 +348,7 @@ class _GameScreenState extends State<GameScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
           onTap: () {
             setState(() => prompt = key);
-            if (say) speak(w.text);
+            if (say) speakWord(w);
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -624,7 +627,7 @@ class _GameScreenState extends State<GameScreen> {
               Icons.menu_book_outlined,
               'Basaha kini',
               C.teal,
-              () => speak(w.text),
+              () => speakWord(w),
             ),
           ],
         ),

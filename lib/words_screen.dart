@@ -139,6 +139,9 @@ class WordCard extends StatelessWidget {
 
   bool get isCustom => onRemove != null;
 
+  /// A word the family added that has no recorded voice yet.
+  bool get noSound => isCustom && word.audio == null;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -160,6 +163,7 @@ class WordCard extends StatelessWidget {
                   child: WordPicture(
                     kind: word.picture,
                     label: word.text,
+                    photo: word.photo,
                     width: 120,
                     height: 80,
                   ),
@@ -177,13 +181,13 @@ class WordCard extends StatelessWidget {
                     ),
                   ),
                   Opacity(
-                    opacity: isCustom ? 0.4 : 1,
+                    opacity: noSound ? 0.4 : 1,
                     child: ToyButton(
                       circle: true,
                       size: 56,
                       color: C.teal,
                       onTap: () {
-                        if (isCustom) {
+                        if (noSound) {
                           ScaffoldMessenger.of(context)
                             ..hideCurrentSnackBar()
                             ..showSnackBar(
@@ -195,7 +199,7 @@ class WordCard extends StatelessWidget {
                               ),
                             );
                         } else {
-                          speak(word.text);
+                          speakWord(word);
                         }
                       },
                       child: const Icon(

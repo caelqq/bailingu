@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:flutter/foundation.dart';
 
 // ============================================================
@@ -16,8 +18,8 @@ class Word {
   final String text;
   final List<String> parts; // the syllables, e.g. ['i', 'ro']
   final String picture; // 'dog', 'cat', 'horse', 'house' or 'word'
-  final String? audio;
-  final String? photo;
+  final String? audio; // path/link of the family's recorded voice
+  final Uint8List? photo; // the photo the family picked
 }
 
 const firstWord = Word(
