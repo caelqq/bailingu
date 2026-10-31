@@ -64,6 +64,9 @@ final List<Word> kWords = [
     _fromSplit(s),
 ];
 
+/// How many words the family can add (not counting the starter words).
+const int maxCustomWords = 5;
+
 /// Splits a typed word into syllables (same rule as the React app).
 List<String> splitWord(String text) {
   final cleaned = text.toLowerCase().trim();
@@ -105,6 +108,11 @@ class AppState extends ChangeNotifier {
   void addWord(Word word) {
     custom.removeWhere((w) => w.id == word.id);
     custom.add(word);
+    notifyListeners();
+  }
+
+  void removeWord(String id) {
+    custom.removeWhere((w) => w.id == id);
     notifyListeners();
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'add_word_screen.dart';
 import 'game_screen.dart';
 import 'games_screen.dart';
 import 'home_screen.dart';
@@ -33,6 +34,7 @@ class BasahayApp extends StatelessWidget {
             args: settings.arguments as ResultsArgs? ?? const ResultsArgs(),
           ),
           '/words' => const WordsScreen(),
+          '/add-word' => const AddWordScreen(),
           '/progress' => const ProgressScreen(),
           _ => const HomeScreen(),
         };
